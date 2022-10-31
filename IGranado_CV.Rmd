@@ -1,0 +1,125 @@
+---
+name: Igor
+surname: Granado
+profilepic: img/IGOR_GRANADO_03b.jpg
+position: "PhD student in Computer Science"
+address: "Departament of Sustainable Fishing Technologies, AZTI-BRTA"
+email: "igranado@azti.es"
+github: GranadoIgor
+linkedin: igorgranadodominguez
+researchgate: Igor-Granado-2
+date: "`r format(Sys.time(), '%B %Y')`"
+headcolor: A2D508
+aboutme: "..."
+output: vitae::awesomecv
+header-includes:
+  \usepackage{colortbl}
+  \arrayrulecolor{white}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+library(kableExtra)
+library(tibble)
+library(dplyr)
+library(tidyverse)
+
+## Load data
+projects <- read_csv2("data/projects.csv")
+```
+
+
+# Professional Experience
+
+```{r}
+tribble( ~ Role, ~ Year, ~ Institution, ~ Where,
+  "Predoctoral Researcher - Dept. of Sustainable Fishing Technologies", "Feb. 2019 - Present", "AZTI-BRTA", "Pasaia, SP",
+  "Research assistent - Dept. of of Marine Technologies", "Jan. 2017 - Jan. 2019", "AZTI-BRTA", "Pasaia, SP") %>%
+  detailed_entries(Institution, Year, Role, Where)
+```
+
+
+# Education
+
+```{r}
+tribble(~ Degree, ~ Year, ~ Institution, ~ Where,
+  "Doctoral Programme in Informatics Engineering", "Feb. 2019 - Present", "University of the Basque Country", "Donostia, SP",
+  "MSc in integrated water system management", "Sept. 2015 - Sept. 2016", "University of Cantabria", "Santander, SP",
+  "BSc in Civil Engineering", "Sept. 2012 - Sept. 2014", "University of the Basque Country", "Donostia, SP") %>% 
+  detailed_entries(Institution, Year, Degree, Where)
+```
+
+
+# Skills
+
+## Technical skills
+
+```{r}
+tribble(
+   ~`Coding Languages`, ~Software, ~Other,
+  "R -- SQL -- Python -- C++",
+  "QGIS -- ArcGIS -- PostgreSQL -- WEKA -- Netica",
+  "Git -- RMarkdown -- LaTex -- Microsoft office"
+) %>%
+  kable(booktabs = T, align = 'c', escape = F, format = "latex") %>%
+  row_spec(0, bold = T, color = "#A2D508") %>%
+  row_spec(1, bold = F, color = "#7f7f7f") %>%
+  column_spec(column = 1:3, width = '5.64cm')
+```
+
+
+
+# Projects
+
+```{r}
+projects %>%
+  arrange(desc(year)) %>%
+  detailed_entries(what = Name, when = date, with = Abbreviation)
+```
+
+
+<!-- \newpage -->
+
+
+# Publications
+
+For a complete list of publications see [*my ResearchGate profile*](https://www.researchgate.net/profile/Igor-Granado-2).
+
+## Articles
+
+```{r}
+bibliography_entries("data/Articles.bib") %>% 
+  arrange(desc(issued), author$family) %>% 
+  filter(row_number() %in% c(1:4, 6:7))
+```
+
+
+## Book chapters
+
+```{r}
+bibliography_entries("data/chapters.bib") %>%
+  arrange(desc(issued), author$family) %>% 
+  filter(row_number() %in% 1:4)
+```
+
+
+## Technical reports
+
+```{r}
+bibliography_entries("data/reports.bib") %>%
+  arrange(desc(issued), author$family) %>% 
+  filter(row_number() %in% 1:3)
+```
+
+
+## Oral Presentations
+
+```{r}
+bibliography_entries("data/OralPresentations.bib") %>%
+  arrange(desc(issued), author$family)  %>% 
+  filter(row_number() %in% 1:3)
+```
+
+
+
